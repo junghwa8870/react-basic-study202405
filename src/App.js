@@ -1,10 +1,9 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import AddUsers from './components/Users/AddUsers';
-import UserList from './components/Users/UserList';
 import MainHeader from './components/SideEffect/MainHeader/MainHeader';
 import Login from './components/SideEffect/Login/Login';
 import Home from './components/SideEffect/Home/Home';
+import AuthContext from './components/store/auth-context';
 
 const App = () => {
   console.log('App 컴포넌트 실행!');
@@ -15,7 +14,7 @@ const App = () => {
   // 현재 login-flag가 존재하는지 검사
   console.log('로그인 검사 수행!');
 
-  // 기본에 로그인 한 사람인지 확인하는 코드는
+  // 기존에 로그인 한 사람인지 확인하는 코드는
   // 리렌더링 될 때마다 실행하면 안됨! (한 번만 확인하면 됨.)
   useEffect(() => {
     console.log('useEffect 실행! - 최초 단 한번만 실행됨!');
@@ -41,15 +40,18 @@ const App = () => {
     setIsLoggedIn(false);
   };
 
-  console.log('App 컴포넌트의 끝!');
   return (
-    <>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+    <AuthContext.Provider
+      value={{
+        isLoggedIn,
+      }}
+    >
+      <MainHeader onLogout={logoutHandler} />
       <main>
         {isLoggedIn && <Home />}
         {!isLoggedIn && <Login onLogin={loginHandler} />}
       </main>
-    </>
+    </AuthContext.Provider>
   );
 };
 
