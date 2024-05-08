@@ -4,11 +4,11 @@ import Input from '../../../UI/Input/Input';
 
 const MealItemForm = ({ id, onAddToCart }) => {
   // 수량의 상태를 관리하는 변수
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
 
   // 수량이 변경될 때마다 발동하는 함수
   const amountHandler = (amt) => {
-    console.log('선택된 수량: ', amt);
+    // console.log('선택된 수량: ', amt);
     setAmount(amt);
   };
 
@@ -27,7 +27,7 @@ const MealItemForm = ({ id, onAddToCart }) => {
         onAdd={amountHandler}
         label='수량'
         input={{
-          id: 'amount_' + id, // 수정: props.id -> id
+          id: 'amount_' + id,
           type: 'number',
           min: '1',
           max: '5',
